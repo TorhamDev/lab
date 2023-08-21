@@ -32,10 +32,12 @@ def read_rent_days() -> int:
         days_str = input(
             "How many days would you like to rent the vehicle? (enter a positive number) "
         )
-        try:
+
+        if days_str.isdigit():
             days = int(days_str)
-        except ValueError:
+        else:
             print("Invalid input. Please enter a number.")
+
     return days
 
 
@@ -46,10 +48,12 @@ def read_kms_to_drive() -> int:
         km_str = input(
             "How many kilometers would you like to drive (enter a positive number)? "
         )
-        try:
+
+        if km_str.isdigit():
             km = int(km_str)
-        except ValueError:
+        else:
             print("Invalid input. Please enter a number.")
+
     return km
 
 
