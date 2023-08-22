@@ -12,21 +12,21 @@ class PaymentStatus(Enum):
 @dataclass
 class Item:
     name: str
-    price: str
+    price: int
     quantity: int
 
     @property
-    def calcualted_price(self):
+    def calcualted_price(self) -> int:
         return self.quantity * self.price
 
 
 @dataclass
 class Order:
     items: list[Item] = field(default_factory=list)
-    status: str = PaymentStatus.OPEN
+    status: PaymentStatus = PaymentStatus.OPEN
 
-    def add_item(self, name: str, quantity: int, price: int) -> None:
-        self.items.append(Item(name=name, quantity=quantity, price=price))
+    def add_item(self, item: Item) -> None:
+        self.items.append(item)
 
     @property
     def total_price(self) -> int:
