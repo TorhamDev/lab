@@ -1,4 +1,5 @@
 from enum import Enum, auto
+from dataclasses import dataclass
 
 
 class PaymentStatus(Enum):
@@ -8,23 +9,31 @@ class PaymentStatus(Enum):
     PAID = auto()
 
 
+@dataclass
+class Item:
+    name: str
+    price: str
+    quantity: int
+
+    @property
+    def calcualted_price(self):
+        return self.quantity * self.price
+
+
 class Order:
     def __init__(self):
-        self.items: list[str] = []
-        self.quantities: list[int] = []
-        self.prices: list[int] = []
+        self.items: list[Item] = []
         self.status: str = "open"
 
     def add_item(self, name: str, quantity: int, price: int) -> None:
-        self.items.append(name)
-        self.quantities.append(quantity)
-        self.prices.append(price)
+        self.items.append(Item(name=name, quantity=quantity, price=price))
 
     @property
     def total_price(self) -> int:
         total = 0
-        for i in range(len(self.prices)):
-            total += self.quantities[i] * self.prices[i]
+        for item in self.items:
+            total += item.calcualted_price
+
         return total
 
 
