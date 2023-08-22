@@ -12,8 +12,8 @@ class PaymentStatus(Enum):
 @dataclass
 class Item:
     name: str
-    price: int
     quantity: int
+    price: int
 
     @property
     def calcualted_price(self) -> int:
@@ -30,18 +30,14 @@ class Order:
 
     @property
     def total_price(self) -> int:
-        total = 0
-        for item in self.items:
-            total += item.calcualted_price
-
-        return total
+        return sum([item.calcualted_price for item in self.items])
 
 
 def main() -> None:
     order = Order()
-    order.add_item(Item("Keyboard", 1, 5000))
-    order.add_item(Item("SSD", 1, 15000))
-    order.add_item(Item("USB cable", 2, 500))
+    order.add_item(Item(name="Keyboard", quantity=1, price=5000))
+    order.add_item(Item(name="SSD", quantity=1, price=15000))
+    order.add_item(Item(name="USB cable", quantity=2, price=500))
 
     print(f"The total price is: ${(order.total_price / 100):.2f}.")
 
