@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 class PaymentStatus(Enum):
@@ -20,10 +20,10 @@ class Item:
         return self.quantity * self.price
 
 
+@dataclass
 class Order:
-    def __init__(self):
-        self.items: list[Item] = []
-        self.status: str = "open"
+    items: list[Item] = field(default_factory=list)
+    status: str = PaymentStatus.OPEN
 
     def add_item(self, name: str, quantity: int, price: int) -> None:
         self.items.append(Item(name=name, quantity=quantity, price=price))
